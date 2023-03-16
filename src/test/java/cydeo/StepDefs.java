@@ -8,10 +8,7 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.Assert;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.*;
 
 import java.util.concurrent.TimeUnit;
 
@@ -28,7 +25,17 @@ public class StepDefs {
 
     @When("^I search for \"([^\"]*)\"$")
     public void i_search_for(String search) throws Throwable {
-        Driver.getDriver().findElement(By.cssSelector("[id*='search-query']")).sendKeys(search + Keys.ENTER);
+        WebElement inputBox = Driver.getDriver().findElement(By.cssSelector("[id*='search-query']"));
+
+        // Checking the location of an input box by using Point java class reference and getting the location with .getLocation() Selenium method
+        Point elementLocation = inputBox.getLocation();
+        // can print the coordinates of x and y with Point class .getX() and .getY() methods
+        System.out.println("X = "+elementLocation.getX());
+        System.out.println("Y = "+elementLocation.getY());
+
+        inputBox.sendKeys(search + Keys.ENTER);
+
+
     }
 
     @Then("^I should see the results$")
